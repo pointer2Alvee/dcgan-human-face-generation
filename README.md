@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: space-around; align-items: center;">
-  <img src="assets/images/gen_imgs.PNG" alt="Image 1" style="width: 100%; margin: 10px;">
+  <img src="assets/images/gen_imgs.png" alt="Image 1" style="width: 100%; margin: 10px;">
 </div>
 
 ## 📜 dcgan-human-face-generation
