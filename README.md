@@ -133,12 +133,12 @@ paper-hbert-sarcasm-detection/
     3. Discriminator ("Critic") – distinguishes real images from fakes.
          - Activations: LeakyReLU (after BatchNorm), except output layer.
 
-<b> 🤖 (2) Loss Functions :</b> 
+<b> 📉 (3) Loss Functions :</b> 
 - Binary Crossentropy used for both models.
 - Discriminator Loss: Measures accuracy of distinguishing real vs. fake (real → 1, fake → 0).
 - Generator Loss: Measures success at fooling the discriminator (fake → 1).
 
-<b> 🤖 (2) Optimization :</b> 
+<b> 📶 (4) Optimization :</b> 
 - Both models use Adam Optimizer independently for training.
 
 ##### 📊 Evaluation
