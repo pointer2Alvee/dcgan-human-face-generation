@@ -127,18 +127,18 @@ paper-hbert-sarcasm-detection/
 - Append processed images to dataset
 
 <b> 🤖 (2) DCGAN :</b> 
-
 **Two Neural Networks:**
     1. Generator ("Artist") – creates realistic-looking images.
          - Activations: ReLU for all layers (except final layer which uses tanh).
     3. Discriminator ("Critic") – distinguishes real images from fakes.
          - Activations: LeakyReLU (after BatchNorm), except output layer.
 
-**Loss Functions**
+<b> 📈 (3) Loss Functions :</b> 
 - Binary Crossentropy used for both models.
 - Discriminator Loss: Measures accuracy of distinguishing real vs. fake (real → 1, fake → 0).
 - Generator Loss: Measures success at fooling the discriminator (fake → 1).
-
+  
+<b> 📶 (4) Optimization :</b> 
 **Optimization**
 - Both models use Adam Optimizer independently for training.
 
