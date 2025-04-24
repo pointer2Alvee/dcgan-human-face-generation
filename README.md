@@ -4,17 +4,75 @@
 
 ## 📜 dcgan-human-face-generation
 #### 📌 Summary 
-An implementation of a Generative model, DCGAN, for generating human faces using Python & TensorFlow, completely ran on Kaggle 
+Implementation of Deep Convolutional Generative Adversarial Network (DCGAN) for generating Human faces using Python and TensorFlow, entirely executed on Kaggle.
 
 #### 🧠 Overview
+This project implements a variation of the Generative Adversarial Network (GAN) called Deep Convolutional GAN (DCGAN) to generate synthetic human faces using Python and TensorFlow. The DCGAN architecture consists of two competing neural networks:
+- **(10 The Generator     :** Creates fake face images from random noise.
+- **(2) The Discriminator :** Tries to distinguish between real and fake images.
+
+Both networks improve through adversarial training: the generator gets better at mimicking real faces, and the discriminator becomes more skilled at detecting fakes. This dynamic pushes the generator to produce increasingly realistic outputs. To maintain balance during training, the discriminator is deliberately kept simpler to avoid overpowering the generator.
+
+The model is trained on the [Flickr Faces Dataset Resized](https://www.kaggle.com/datasets/matheuseduardo/flickr-faces-dataset-resized/data) from kaggle, which includes 52,000 face images in three resolutions: 64x64, 128x128, and 256x256. Due to GPU memory limitations, 64x64 resolution is recommended for training on the full dataset. However, this project experimented with 256x256 resolution on a smaller subset of the dataset to generate higher-quality outputs.  **All development and experimentation were carried out on Kaggle**, leveraging its GPU resources. This project also shows how input resolution impacts the quality of generated faces—higher-resolution training images lead to sharper, more realistic outputs, while lower resolutions introduce some blur and noise.
+
+**DCGAN Model Architecture Summary**
+- Two Neural Networks:
+    1. Generator ("Artist") – creates realistic-looking images.
+    2. Discriminator ("Critic") – distinguishes real images from fakes.
+During training, both networks improve in opposition until the discriminator can no longer tell real from fake images.
+
+**Generator Architecture**
+- Structure:
+    1. Fully connected (Dense) layer
+    2. Transposed Convolution layers (upsampling)
+    3. Final Output Layer
+
+- Workflow:
+    1. Starts with a latent vector (8x8x512).
+    2. Upsamples through transposed convolutions:
+         - 8×8 → 16×16 (256 channels) --> 16×16 → 32×32 (128) -->
+         - 32×32 → 64×64 (64) --> 64×64 → 128×128 (32) --> 128×128 → 256×256 (16)
+    3. Output layer: tanh activation to produce final 64×64×3 RGB image.
+
+- Activations: ReLU for all layers (except final layer which uses tanh).
+
+**Discriminator Architecture**
+- Structure:
+    1. Convolutional layers (reverse of generator)
+    2. Flatten and Dropout
+    3. Final Classification Layer
+    4. 
+- Workflow (mirrors Generator in reverse):
+    1. 256×256 → 128×128 (16 channels) --> 128×128 → 64×64 (32) --> 64×64 → 32×32 (64)-->
+    2. 32×32 → 16×16 (128) --> 16×16 → 8×8 (256)
+
+- Activations: LeakyReLU (after BatchNorm), except output layer.
+
+**Loss Functions**
+- Binary Crossentropy used for both models.
+
+- Discriminator Loss:
+    - Measures accuracy of distinguishing real vs. fake (real → 1, fake → 0).
+- Generator Loss:
+    - Measures success at fooling the discriminator (fake → 1).
+
+**Optimization**
+- Both models use Adam Optimizer independently for training.
+
+The project successfully demonstrates the capability of DCGANs to generate human faces, although the realism of the output images largely depends on the scale of training and the size of the input dataset.
 
 
 #### 🎯 Use Cases 
-- Detecting Sarcastic comments or opinions on social media platforms
+- Synthetic Face Generation
+- Data Augmentation
+- Anonymization
+- Art & Creative Media
+- AI Model Benchmarking
+- Educational Purpose
+- Testing Face Recognition Systems
 
 #### 🟢 Project Status
 - Current Version: V1.0
-- Completed
 
 #### 📂 Repository Structure
 ```
@@ -31,10 +89,10 @@ paper-hbert-sarcasm-detection/
 ### ✨ Features
 - ✅ `DCGAN` model class
 - ✅ Preprocessed Data
-- ✅ Evaluation metrics: Accuracy 
+- ✅ Evaluation: Visualization of generated synthetif human face output 
 
-🛠️ In progress:
-- Modification of H-bert Architecutre 
+🛠️ In progress:-
+- On-going training with 256x256 images with more training epochs
 
 <!--
 ### 🎥 Demo
@@ -50,7 +108,7 @@ paper-hbert-sarcasm-detection/
 - Optimizers, Loss Functions
   
 #### 💻 Software Requirements
-- IDE (VS Code) or jupyter notebook or google colab
+- IDE (VS Code) or jupyter notebook or google colab, kaggle
 - **Best run on Kaggle using GPU T4x2**
   
 #### 🛡️ Tech Stack
@@ -61,18 +119,32 @@ paper-hbert-sarcasm-detection/
 
 #### 🔍 Modules Breakdown
 <b> 📥 (1) Data-Preprocessing :</b> wh 
-- Loading [Sarcasm on Reddit](https://www.kaggle.com/datasets/danofer/sarcasm?select=train-balanced-sarcasm.csv) dataset from kaggle 
-- Dimention Reduced, Data Cleaned
+- Load dataset from kaggle
+- Ensure RGB (convert from grayscale if needed)
+- Resize images
+- Convert to float dtype
+- Normalize to (-1, 1) for GAN training
+- Append processed images to dataset
 
 <b> 🤖 (2) DCGAN :</b> 
 
-- The DataFlow:- 
-(L-1) output --> (L-2) output --> (L-3) output --> (L-4) output --> (L-5) output --> predictions (0 or 1)
+**Two Neural Networks:**
+    1. Generator ("Artist") – creates realistic-looking images.
+         - Activations: ReLU for all layers (except final layer which uses tanh).
+    3. Discriminator ("Critic") – distinguishes real images from fakes.
+         - Activations: LeakyReLU (after BatchNorm), except output layer.
 
+**Loss Functions**
+- Binary Crossentropy used for both models.
+- Discriminator Loss: Measures accuracy of distinguishing real vs. fake (real → 1, fake → 0).
+- Generator Loss: Measures success at fooling the discriminator (fake → 1).
+
+**Optimization**
+- Both models use Adam Optimizer independently for training.
 
 ##### 📊 Evaluation
-- Using 'Accuracy' Meterics to evaluate model performance
-- Future work : precision , recall , f1
+- Seeing the generated fake images
+- Future work : auraccy, precision , recall , f1
 
 #### ⚙️ Installation
 ```
@@ -103,13 +175,11 @@ matplotlib
 - ✅ DCGAN
 - ✅ CNN, CONVOLUTION, POOLING
 - ✅ GAN, OPTIMIZERS, LOSS FUNCTIONS
-  
-- ⏳ Upcoming  : 
 
 ### 🧭 Roadmap
 - [x] Implementation of DCGAN
-- [x] Generation of Fake Human Faces  
-
+- [x] Generation of Fake Human Faces
+- [ ] Trained with 300+ epochs 
 
 ### 🤝 Contributing
 Contributions are welcomed!
