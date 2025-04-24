@@ -8,7 +8,7 @@ Implementation of Deep Convolutional Generative Adversarial Network (DCGAN) for 
 
 #### 🧠 Overview
 This project implements a variation of the Generative Adversarial Network (GAN) called Deep Convolutional GAN (DCGAN) to generate synthetic human faces using Python and TensorFlow. The DCGAN architecture consists of two competing neural networks:
-- **(10 The Generator     :** Creates fake face images from random noise.
+- **(1) The Generator     :** Creates fake face images from random noise.
 - **(2) The Discriminator :** Tries to distinguish between real and fake images.
 
 Both networks improve through adversarial training: the generator gets better at mimicking real faces, and the discriminator becomes more skilled at detecting fakes. This dynamic pushes the generator to produce increasingly realistic outputs. To maintain balance during training, the discriminator is deliberately kept simpler to avoid overpowering the generator.
@@ -133,12 +133,12 @@ paper-hbert-sarcasm-detection/
     3. Discriminator ("Critic") – distinguishes real images from fakes.
          - Activations: LeakyReLU (after BatchNorm), except output layer.
 
-**Loss Functions**
+<b> 🤖 (2) Loss Functions :</b> 
 - Binary Crossentropy used for both models.
 - Discriminator Loss: Measures accuracy of distinguishing real vs. fake (real → 1, fake → 0).
 - Generator Loss: Measures success at fooling the discriminator (fake → 1).
 
-**Optimization**
+<b> 🤖 (2) Optimization :</b> 
 - Both models use Adam Optimizer independently for training.
 
 ##### 📊 Evaluation
